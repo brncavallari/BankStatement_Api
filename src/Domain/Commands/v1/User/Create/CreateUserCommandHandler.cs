@@ -1,12 +1,11 @@
-﻿namespace Domain.Commands.v1.User.Create
-{
-    using AutoMapper;
-    using Domain.Entities.v1.User;
-    using Domain.Interfaces.v1.User;
-    using MediatR;
-    using System.Security.Cryptography;
-    using System.Text;
+﻿using AutoMapper;
+using CrossCutting.Exception.v1;
+using Domain.Entities.v1.User;
+using Domain.Interfaces.v1.User;
+using MediatR;
 
+namespace Domain.Commands.v1.User.Create
+{
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
     {
         private readonly IUserRepository _userRepository;
@@ -22,8 +21,13 @@
         {
             try
             {
-                var entity = _mapper.Map<User>(request);
-                entity.CreateHash();
+                var entity = _mapper.Map<UserEntity>(request);
+
+                entity.CreatePasswordHash();
+
+                var userExists = await _userRepository.ExistsUser(entity.Email);
+
+                if (userExists) throw new UserExistsException("Email já existente.");
 
                 await _userRepository.AddAsync(entity);
 
@@ -34,7 +38,5 @@
                 throw new Exception(ex.Message);
             }
         }
-
-       
     }
 }

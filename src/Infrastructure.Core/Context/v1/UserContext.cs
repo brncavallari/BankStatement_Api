@@ -7,7 +7,7 @@ namespace Infrastructure.Core.Context.v1
     public class UserContext : DbContext
     {
         public UserContext(DbContextOptions<UserContext> options) : base(options) { }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfiguration configuration = new ConfigurationBuilder()
@@ -15,12 +15,11 @@ namespace Infrastructure.Core.Context.v1
                        .AddJsonFile("appsettings.json", false, true).Build();
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("ServerConnection"));
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<UserEntity>().ToTable("Users");
         }
     }
 }

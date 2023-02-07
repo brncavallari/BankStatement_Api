@@ -8,7 +8,7 @@ namespace Domain.MapperProfile.v1
     {
         public UserProfile()
         {
-            CreateMap<CreateUserCommand, User>();
+            CreateMap<CreateUserCommand, UserEntity>();
         }
     }
 }

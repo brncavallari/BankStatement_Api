@@ -1,7 +1,10 @@
-﻿namespace Domain.Interfaces.v1.User
+﻿using Domain.Entities.v1.User;
+
+namespace Domain.Interfaces.v1.User
 {
     public interface IUserRepository
     {
-        Task AddAsync(Domain.Entities.v1.User.User user);
+        Task AddAsync(UserEntity user);
+        Task<bool> ExistsUser(string email);
     }
 }
