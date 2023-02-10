@@ -25,5 +25,10 @@ namespace Infrastructure.Data.Repositories.v1.User
         {
             return await _userContext.Users.AnyAsync(x => x.Email == email);
         }
+
+        public async Task<UserEntity?> GetUserByEmail(string email)
+        {
+            return await _userContext.Users.Where(x=> x.Email == email).FirstOrDefaultAsync();
+        }
     }
 }

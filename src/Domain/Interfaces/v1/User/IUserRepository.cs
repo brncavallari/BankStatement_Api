@@ -6,5 +6,6 @@ namespace Domain.Interfaces.v1.User
     {
         Task AddAsync(UserEntity user);
         Task<bool> ExistsUser(string email);
+        Task<UserEntity?> GetUserByEmail(string email);
     }
 }

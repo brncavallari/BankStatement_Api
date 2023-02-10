@@ -26,9 +26,9 @@ namespace Api.Controllers.v1.Login
                 var response = await _mediator.Send(tokenCommand);
                 return Ok(response);
             }
-            catch
+            catch(Exception ex)
             {
-                return Unauthorized();
+                return Unauthorized(ex.Message);
             }
         }
     }
